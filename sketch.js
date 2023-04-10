@@ -1,45 +1,38 @@
-let points = [];
+let particles = [];
+const num = 500;
+
+const noiseScale = 0.01;
 
 function setup() {
-    createCanvas(400, 400);
-    angleMode(DEGREES);
-    stroke(255);
-    strokeWeight(10);
-
-    for(let i = 0; i < 12; i++) {
-        points[i] = createVector(random(width), random(height));
-    }
-
-    pixelDensity(1);
+  createCanvas(600, 600);
+  for(let i = 0; i < num; i ++) {
+    particles.push(createVector(random(width), random(height)));
+    stroke(249,233,236);
+    strokeWeight(13);
+    blur(30);
+  }
 }
 
-
 function draw() {
-    background(0);
-    
-    loadPixels();
-    for(let x = 0; x < width; x++){
-      for(let y = 0; y < height; y++) {
-        
-        for(let i = 0; i < points.length; i++){
-          let d = dist(x, y, points[i].x, points[i].y);
-          distances[i] = d;
-        }
-        
-        let sorted =sort(distances);
-        let noise = sorted[0];
-        let index = (x+y*width)*4;
-        pixels[index] = noise;
-        pixels[index+1] = noise;
-        pixels[index+2] = noise;
-        pixels[index+3] = 255;
-      }
+  background(29,47,111);
+  for(let i = 0; i < num; i ++) {
+    let p = particles[i];
+    point(p.x, p.y);
+    let n = noise(p.x * noiseScale, p.y * noiseScale);
+    let a = TAU * n;
+    p.x += cos(a);
+    p.y += sin(a);
+    if (!onScreen(p)) {
+      p.x = random(width);
+      p.y = random(height);
     }
-    updatePixels();
-    
-    beginShape(POINTS);
-    for(let i =0; i < points.length; i++){
-      vertex(points[i].x, points[i].y);
-    }
-        endShape();
   }
+}
+
+function mouseReleased() {
+  noiseSeed(millis());
+}
+
+function onScreen(v){
+  return v.x >= 0 && v.x <= width && v.y >= 0 && v.y <= height;
+}
