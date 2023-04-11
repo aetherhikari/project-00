@@ -1,20 +1,22 @@
 let particles = [];
-const num = 500;
+const num = 1000;
 
 const noiseScale = 0.01;
+
+
 
 function setup() {
   createCanvas(600, 600);
   for(let i = 0; i < num; i ++) {
     particles.push(createVector(random(width), random(height)));
-    stroke(249,233,236);
-    strokeWeight(13);
-    blur(30);
+    stroke(157,222,249);
+    strokeWeight(3);
   }
+
 }
 
 function draw() {
-  background(29,47,111);
+  background(178,136,110);
   for(let i = 0; i < num; i ++) {
     let p = particles[i];
     point(p.x, p.y);
@@ -27,6 +29,8 @@ function draw() {
       p.y = random(height);
     }
   }
+
+
 }
 
 function mouseReleased() {
