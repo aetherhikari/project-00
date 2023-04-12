@@ -9,14 +9,13 @@ function setup() {
   createCanvas(600, 600);
   for(let i = 0; i < num; i ++) {
     particles.push(createVector(random(width), random(height)));
-    stroke(157,222,249);
-    strokeWeight(3);
+    stroke(100,15,25,50);
   }
 
 }
 
 function draw() {
-  background(178,136,110);
+  background(190,10,200,1);
   for(let i = 0; i < num; i ++) {
     let p = particles[i];
     point(p.x, p.y);
